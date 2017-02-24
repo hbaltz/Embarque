@@ -49,8 +49,8 @@ void afficherDonnee(struct message msg, struct timeUTC tUtc);
 
 int main(int argc, char **argv){
 
+	// Récupération argv, notammant le premier d'affichage
 	int argAff;
-
 	if (argv[1] != NULL){
 		argAff = strtod(argv[1],NULL);
 	}
@@ -77,20 +77,19 @@ int main(int argc, char **argv){
 	if(chks1 == msg.checksum1 && chks2==msg.checksum2){
 		// Si le message ubdx est de class 01 et a pour ID 21, on lit la date
 		if(msg.class == 0x01  && msg.ID == 0x21){
-				// Lecture payload
-				struct timeUTC tUtc;
-				tUtc = * (struct timeUTC *) msg.payload;
+			// Lecture payload
+			struct timeUTC tUtc;
+			tUtc = * (struct timeUTC *) msg.payload;
 
-				
-				// Affichage des données détaillée
-				if(argAff == 1){
-					afficherDonnee(msg,tUtc);
-				}
-
-				// Affichage de la date d'acquisiton
-				printf("Date d'acquisiton : %u/%u/%u à %u:%u:%u \n",
-					tUtc.day,tUtc.month,tUtc.year,tUtc.hour,tUtc.min,tUtc.sec);
+			// Affichage des données détaillée
+			if(argAff == 1){
+				afficherDonnee(msg,tUtc);
 			}
+
+			// Affichage de la date d'acquisiton
+			printf("Date d'acquisiton : %u/%u/%u à %u:%u:%u \n",
+				tUtc.day,tUtc.month,tUtc.year,tUtc.hour,tUtc.min,tUtc.sec);
+		}
 	}
 	return 0;
 }
